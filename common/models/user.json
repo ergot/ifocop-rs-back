@@ -1,0 +1,38 @@
+{
+  "name": "user",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "coordinates": {
+      "type": "string"
+    },
+    "sexe": {
+      "type": "string"
+    },
+    "picture": {
+      "type": "string"
+    },
+    "birthday": {
+      "type": "date"
+    },
+    "introduction": {
+      "type": "string"
+    },
+    "preference": {
+      "type": "any"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
