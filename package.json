@@ -7,7 +7,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "node .",
+    "start": "sudo service mongod restart & nodemon .",
     "posttest": "npm run lint && nsp check"
   },
   "dependencies": {
