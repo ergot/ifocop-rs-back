@@ -4,10 +4,10 @@ module.exports = function(app) {
   // 'name' of your mongo connector, you can find it in datasource.json
 
   // WARNING: Calling this function deletes all data! Use autoupdate() to preserve data.
-  app.dataSources.mongoDs.automigrate('user', function(err) {
+  app.dataSources.mongoDs.automigrate('myUser', function(err) {
     if (err) throw err;
 
-    app.models.user.create([{
+    app.models.myUser.create([{
       email: 'admin@ifocop.com',
       password: 'admin'
     }, {
