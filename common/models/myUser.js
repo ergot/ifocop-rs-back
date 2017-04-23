@@ -26,13 +26,15 @@ module.exports = function(user) {
       console.log('> verification email sent:', response);
 
       //reponse http apres l envoie de l email
-      context.res.render('response', {
-        title: 'Signed up successfully',
-        content: 'Please check your email and click on the verification link ' -
-        'before logging in.',
-        redirectTo: '/',
-        redirectToLinkText: 'Log in'
-      });
+      context.res.sendStatus(200);
+      //si besoin creer le template server/views/response.ejs
+      // context.res.render('response', {
+      //   title: 'Signed up successfully',
+      //   content: 'Please check your email and click on the verification link ' -
+      //   'before logging in.',
+      //   redirectTo: '/',
+      //   redirectToLinkText: 'Log in'
+      // });
     });
   });
 };
