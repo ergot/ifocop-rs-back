@@ -37,6 +37,12 @@
   },
   "myUser": {
     "dataSource": "mongoDs",
-    "public": true
+    "public": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
+  },
+  "Email": {
+    "dataSource": "myEmailDataSource"
   }
 }
