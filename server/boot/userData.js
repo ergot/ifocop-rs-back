@@ -8,11 +8,15 @@ module.exports = function(app) {
     if (err) throw err;
 
     app.models.myUser.create([{
-      email: 'admin@ifocop.com',
-      password: 'admin'
+      email: 'admin@yopmail.com',
+      password: 'admin',
+      verificationToken: null,
+      emailVerified: true,
     }, {
-      email: 'jose@ifocop.com',
-      password: 'jose'
+      email: 'jose@yopmail.com',
+      password: 'jose',
+      verificationToken: null,
+      emailVerified: true,
     }], function(err, users) {
       if (err) throw err;
       console.log('Models created: \n', users);
