@@ -1,9 +1,9 @@
 'use strict';
 
-module.exports = function(server) {
+module.exports = function (app) {
   // Install a `/` route that returns server status
-  var router = server.loopback.Router();
-  router.get('/', server.loopback.status());
+  var router = app.loopback.Router();
+  router.get('/', app.loopback.status());
 
   router.get('/verified', function(req, res){
     res.render('verified');
