@@ -1,6 +1,8 @@
 'use strict';
 var async = require('async');
 module.exports = function (app) {
+  const Role = app.models.Role;
+  const RoleMapping = app.models.RoleMapping;
   // 'name' of your mongo connector, you can find it in datasource.json
 
   // WARNING: Calling this function deletes all data! Use autoupdate() to preserve data.
@@ -27,9 +29,29 @@ module.exports = function (app) {
       password: 'user',
       verificationToken: null,
       emailVerified: true,
-    }], function (err, users) {
+    }], function(err, users) {
       if (err) throw err;
       console.log('Models created: \n', users);
+
+      //create the admin role
+      Role.create({
+        name: 'admin',
+      }, function(err, role) {
+        if (err) throw err;
+
+        console.log('Created role:', role);
+
+        //make admin an admin
+        role.principals.create({
+          principalType: RoleMapping.USER,
+          principalId: users[0].id,
+        }, function(err, principal) {
+          if (err) throw err;
+
+          console.log('Created principal:', principal);
+        });
+      });
+
     });
   });
 
