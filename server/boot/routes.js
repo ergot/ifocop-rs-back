@@ -9,15 +9,14 @@ module.exports = function (app) {
     res.render('login');
   });
 
-  router.get('/verified', function(req, res){
+  router.get('/verified', function (req, res) {
     res.render('verified');
   });
 
   // 2/ send an email with instructions to reset an existing user's password
   app.post('/request-password-reset', function (req, res, next) {
-
     User.resetPassword({
-      email: req.body.email
+      email: req.body.email,
     }, function (err) {
       if (err) return res.status(401).send(err);
 
@@ -25,24 +24,24 @@ module.exports = function (app) {
         title: 'Password reset requested',
         content: 'Check your email for further instructions',
         redirectTo: '/',
-        redirectToLinkText: 'Log in'
+        redirectToLinkText: 'Log in',
       });
     });
   });
 
-  //3 B show password reset form
+  // 3 B show password reset form
   app.get('/reset-password', function (req, res, next) {
     if (!req.accessToken) return res.sendStatus(401);
     res.render('password-reset', {
-      accessToken: req.accessToken.id
+      accessToken: req.accessToken.id,
     });
   });
+  // reset the user's pasword
 
-  //reset the user's pasword
   app.post('/reset-password', function (req, res, next) {
     if (!req.accessToken) return res.sendStatus(401);
 
-    //verify passwords match
+    // verify passwords match
     if (!req.body.password ||
       !req.body.confirmation ||
       req.body.password !== req.body.confirmation) {
@@ -59,7 +58,7 @@ module.exports = function (app) {
           title: 'Password reset success',
           content: 'Your password has been reset successfully',
           redirectTo: '/',
-          redirectToLinkText: 'Log in'
+          redirectToLinkText: 'Log in',
         });
       });
     });
