@@ -1,5 +1,4 @@
 'use strict';
-var async = require('async');
 module.exports = function (app) {
   const Role = app.models.Role;
   const RoleMapping = app.models.RoleMapping;
@@ -31,28 +30,40 @@ module.exports = function (app) {
       emailVerified: true,
     }], function(err, users) {
       if (err) throw err;
-      console.log('Models created: \n', users);
+      // console.log('Models created: \n', users);
 
-      //create the admin role
+      // create the admin role
       Role.create({
         name: 'admin',
       }, function(err, role) {
         if (err) throw err;
-
         console.log('Created role:', role);
-
-        //make admin an admin
+        // make admin an admin
         role.principals.create({
           principalType: RoleMapping.USER,
           principalId: users[0].id,
         }, function(err, principal) {
           if (err) throw err;
 
-          console.log('Created principal:', principal);
+          console.log('set admin role:', principal);
         });
       });
 
+      // create the member role
+      Role.create({
+        name: 'member',
+      }, function (err, role) {
+        if (err) throw err;
+        console.log('Created role:', role);
+        // make admin an admin
+        role.principals.create({
+          principalType: RoleMapping.USER,
+          principalId: users[1].id,
+        }, function (err, principal) {
+          if (err) throw err;
+          console.log('Created set member role:', principal);
+        });
+      });
     });
   });
-
 };
