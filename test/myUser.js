@@ -17,20 +17,20 @@ const userCompte = {
   password: 'jose',
 };
 
-describe('myUser', function () {
-  describe('admin', function () {
-    it('login with admin compte', function (done) {
+describe('myUser', function() {
+  describe('admin', function() {
+    it('login with admin compte', function(done) {
       chai.request(urlRoot)
         .post('/api/myUsers/login')
         .send(adminCompte)
-        .end(function (err, res) {
+        .end(function(err, res) {
           expect(res).to.have.status(200);
           expect(res.body.id, 'Pas de token').to.exist;
           adminToken = res.body.id;
           done();
         });
     });
-    it('admin get all users', function (done) {
+    it('admin get all users', function(done) {
       chai.request(urlRoot)
         .get('/api/myUsers')
         .set('Authorization', adminToken)
@@ -41,19 +41,19 @@ describe('myUser', function () {
         });
     });
   });
-  describe('user', function () {
-    it('login with user', function (done) {
+  describe('user', function() {
+    it('login with user', function(done) {
       chai.request(urlRoot)
         .post('/api/myUsers/login')
         .send(userCompte)
-        .end(function (err, res) {
+        .end(function(err, res) {
           expect(res).to.have.status(200);
           expect(res.body.id, 'Pas de token').to.exist;
           userToken = res.body.id;
           done();
         });
     });
-    it('user can get all users', function (done) {
+    it('user can get all users', function(done) {
       chai.request(urlRoot)
         .get('/api/myUsers')
         .set('Authorization', userToken)
