@@ -7,8 +7,10 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "sudo service mongod restart & nodemon .",
-    "posttest": "npm run lint && nsp check"
+    "mongo": "sudo service mongod start",
+    "start": "nodemon",
+    "posttest": "npm run lint && nsp check",
+    "test": "mocha"
   },
   "dependencies": {
     "async": "^2.3.0",
@@ -24,8 +26,11 @@
     "strong-error-handler": "^2.0.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "eslint": "^3.17.1",
     "eslint-config-loopback": "^8.0.0",
+    "mocha": "^3.3.0",
     "nsp": "^2.1.0"
   },
   "repository": {
