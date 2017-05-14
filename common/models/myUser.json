@@ -33,12 +33,21 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [{
-    "accessType": "EXECUTE",
-    "principalType": "ROLE",
-    "principalId": "admin",
-    "permission": "ALLOW",
-    "property": "find"
-  }],
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "find"
+    }
+  ],
   "methods": {}
 }
