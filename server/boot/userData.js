@@ -10,22 +10,27 @@ module.exports = function (app) {
 
     app.models.myUser.create([{
       email: 'admin@yopmail.com',
-      password: 'admin',
+      password: 'password',
       verificationToken: null,
       emailVerified: true,
     }, {
       email: 'jose@yopmail.com',
-      password: 'jose',
+      password: 'password',
       verificationToken: null,
       emailVerified: true,
     }, {
-      email: 'user1@yopmail.com',
-      password: 'user',
+      email: 'unverified@yopmail.com',
+      password: 'password',
+      verificationToken: null,
+      emailVerified: false,
+    }, {
+      email: 'jm@yopmail.com',
+      password: 'password',
       verificationToken: null,
       emailVerified: true,
     }, {
-      email: 'user2@yopmail.com',
-      password: 'user',
+      email: 'roro@yopmail.com',
+      password: 'password',
       verificationToken: null,
       emailVerified: true,
     }], function(err, users) {
