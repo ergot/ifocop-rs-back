@@ -10,11 +10,11 @@ let adminToken = null;
 let userToken = null;
 const adminCompte = {
   'email': 'admin@yopmail.com',
-  'password': 'admin',
+  'password': 'password',
 };
 const userCompte = {
   email: 'jose@yopmail.com',
-  password: 'jose',
+  password: 'password',
 };
 
 describe('myUser', function() {
@@ -53,12 +53,14 @@ describe('myUser', function() {
           done();
         });
     });
-    it('user can get all users', function(done) {
+    it('member can get all users Verified', function (done) {
       chai.request(urlRoot)
         .get('/api/myUsers')
         .set('Authorization', userToken)
         .end((err, res) => {
-          console.log(res.body);
+          res.body.forEach((user) => {
+            expect(user.email).to.not.equal('unverified@yopmail.com');
+          });
           expect(res).to.have.status(200);
           expect(res.body[0].email).to.exist;
           done();
