@@ -1,6 +1,7 @@
 'use strict';
 var config = require('../../server/config.json');
 var path = require('path');
+const async = require('async');
 
 module.exports = function (User) {
   // send verification email after registration
@@ -53,5 +54,49 @@ module.exports = function (User) {
       if (err) return console.log('> error sending password reset email');
       console.log('> sending password reset email to:', info.email);
     });
+  });
+  /**
+   * Returne le role de l'utilisateur connecté
+   * @param accessToken {string} - access token de l user en cours
+   * @param asyncDone {callback} - Callback de async
+   * @return {array|Role} - Return un array du model lp Role
+   */
+  function getRole(accessToken, asyncDone) {
+    const RoleMapping = User.app.models.RoleMapping;
+    const Role = User.app.models.Role;
+    if (!accessToken) {
+      throw 'need access token';
+    }
+
+// eslint-disable-next-line max-len
+    RoleMapping.find({where: {principalId: accessToken}}, function (err, roleMappings) {
+      if (err) throw err;
+      if (roleMappings.length > 1) throw 'User avec plusieurs roles non gérer';
+      Role.find({where: {id: roleMappings[0].roleId}}, function (err, roles) {
+          console.log(roles[0]);
+          asyncDone(null, roles[0]);
+        }
+      );
+    });
+  };
+  /**
+   * Change le filtre ,pour un get myUser du role user, pour avoir que les
+   * users avec un email valide
+   */
+  User.beforeRemote('find', function (ctx, modelInstance, next) {
+    if (ctx.req.baseUrl === '/api/myUsers' & ctx.req.method === 'GET') {
+      async.series([
+        function (asyncDone) {
+          getRole(ctx.req.accessToken.userId, asyncDone);
+        },
+      ], function (err, results) {
+        if (results[0].name === 'member') {
+          ctx.args.filter = {where: {emailVerified: true}};
+        }
+        next();
+      });
+    } else {
+      next();
+    }
   });
 };
