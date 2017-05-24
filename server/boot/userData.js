@@ -35,22 +35,17 @@ module.exports = function (app) {
       emailVerified: true,
     }], function(err, users) {
       if (err) throw err;
-      // console.log('Models created: \n', users);
-
       // create the admin role
       Role.create({
         name: 'admin',
       }, function(err, role) {
         if (err) throw err;
-        console.log('Created role:', role);
         // make admin an admin
         role.principals.create({
           principalType: RoleMapping.USER,
           principalId: users[0].id,
         }, function(err, principal) {
           if (err) throw err;
-
-          console.log('set admin role:', principal);
         });
       });
 
@@ -59,14 +54,19 @@ module.exports = function (app) {
         name: 'member',
       }, function (err, role) {
         if (err) throw err;
-        console.log('Created role:', role);
-        // make admin an admin
+        // make users[1] as member
         role.principals.create({
           principalType: RoleMapping.USER,
           principalId: users[1].id,
         }, function (err, principal) {
           if (err) throw err;
-          console.log('Created set member role:', principal);
+        });
+
+        role.principals.create({
+          principalType: RoleMapping.USER,
+          principalId: users[2].id,
+        }, function (err, principal) {
+          if (err) throw err;
         });
       });
     });
