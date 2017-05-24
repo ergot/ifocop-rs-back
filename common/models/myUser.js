@@ -73,7 +73,6 @@ module.exports = function (User) {
       if (err) throw err;
       if (roleMappings.length > 1) throw 'User avec plusieurs roles non gérer';
       Role.find({where: {id: roleMappings[0].roleId}}, function (err, roles) {
-          console.log(roles[0]);
           asyncDone(null, roles[0]);
         }
       );

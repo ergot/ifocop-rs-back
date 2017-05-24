@@ -36,7 +36,7 @@ describe('myUser', function() {
         .set('Authorization', adminToken)
         .end((err, res) => {
           expect(res).to.have.status(200);
-          expect(res.body[0].email).to.exist;
+          expect(res.body.length).to.equal(5);
           done();
         });
     });
@@ -53,7 +53,7 @@ describe('myUser', function() {
           done();
         });
     });
-    it('member can get all users Verified', function (done) {
+    it('member can get all users only Verified', function (done) {
       chai.request(urlRoot)
         .get('/api/myUsers')
         .set('Authorization', userToken)
@@ -62,7 +62,6 @@ describe('myUser', function() {
             expect(user.email).to.not.equal('unverified@yopmail.com');
           });
           expect(res).to.have.status(200);
-          expect(res.body[0].email).to.exist;
           done();
         });
     });
