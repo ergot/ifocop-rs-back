@@ -6,7 +6,6 @@ chai.use(chaiHttp);
 const urlRoot = 'http://localhost:3000';
 let usersLogin = require('../server/boot/userFixture');
 
-
 describe('get token', function () {
   usersLogin.forEach((user) => {
     it(`with ${user.email}`, function (done) {
@@ -33,6 +32,7 @@ describe('get token', function () {
 
   after(() => {
     global.CHAI = {};
+    global.CHAI.urlRoot = 'http://localhost:3000';
     global.CHAI.users = usersLogin;
     global.CHAI.users.getTokenByEmail = (email) => {
       for (let i = 0; CHAI.users; i++) {
