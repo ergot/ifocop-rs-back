@@ -1,0 +1,27 @@
+{
+  "name": "friendsList",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "sender": {
+      "type": "string",
+      "required": true
+    },
+    "receiver": {
+      "type": "string",
+      "required": true
+    },
+    "isConfirmed": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

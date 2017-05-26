@@ -44,5 +44,9 @@
   },
   "Email": {
     "dataSource": "myEmailDataSource"
+  },
+  "friendsList": {
+    "dataSource": "mongoDs",
+    "public": true
   }
 }
