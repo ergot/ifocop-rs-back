@@ -1,4 +1,5 @@
 /* eslint-disable max-len */
+/* global CHAI */
 'use strict';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -43,10 +44,20 @@ describe('Ajouter un utilisateur à la liste d’amis', function () {
       chai.request(CHAI.urlRoot)
         .post('/api/friendsLists')
         .set('Authorization', CHAI.users.getTokenByEmail('jm@yopmail.com'))
-        .send({sender: userRoro._id})
+        .send({receiver: userRoro._id})
         .end((err, res) => {
-          // console.log(res.body.error)
           expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('jm ne peux pas renvoyer une deuxieme FR à roro', function (done) {
+      chai.request(CHAI.urlRoot)
+        .post('/api/friendsLists')
+        .set('Authorization', CHAI.users.getTokenByEmail('jm@yopmail.com'))
+        .send({receiver: userRoro._id})
+        .end((err, res) => {
+          expect(res).to.have.status(409);
           done();
         });
     });
