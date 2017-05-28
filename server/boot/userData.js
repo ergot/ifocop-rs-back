@@ -25,7 +25,7 @@ module.exports = function (app) {
 
       role.principals.create(toto, function (err, principal) {
         if (err) throw err;
-        console.log(principal);
+        //console.log(principal);
       });
     });
   }
