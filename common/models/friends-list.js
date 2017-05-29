@@ -14,12 +14,17 @@ module.exports = function (Friendslist) {
 
       MongoClient.connect(url, function (err, db) {
         if (err) throw err;
-        db.collection('friendsList').find({sender: sender, receiver: receiver}).toArray(function (err2, results) {
+        db.collection('friendsList').find({
+          $or: [
+            {sender: sender, receiver: receiver},
+            {sender: receiver, receiver: sender}]
+        }).toArray(function (err2, results) {
           if (err2) throw err;
           db.close();
           if (results.length === 0) {
             next();
           } else {
+            console.log(results)
             const error = new Error('Une friend request est déja en cours');
             error.status = 409;
             return next(error);
