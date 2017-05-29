@@ -28,12 +28,23 @@ describe('Ajouter un utilisateur à la liste d’amis', function () {
   });
 
   describe('2. Le membre choisi, receveur, est ajouté à la liste d’amis du membre', function () {
-    let userRoro;
+    let userRoro = null;
     before(function (done) {
       MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         db.collection('myUser').find({'email': 'roro@yopmail.com'}).toArray(function (error, results) {
           userRoro = results[0];
+          db.close();
+          done();
+        });
+      });
+    });
+    let userJm = null;
+    before(function (done) {
+      MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
+        db.collection('myUser').find({'email': 'jm@yopmail.com'}).toArray(function (error, results) {
+          userJm = results[0];
           db.close();
           done();
         });
@@ -61,6 +72,27 @@ describe('Ajouter un utilisateur à la liste d’amis', function () {
           done();
         });
     });
+
+    it('roro a une FR de la part de jm', function (done) {
+      chai.request(CHAI.urlRoot)
+        .get('/api/friendsLists')
+        .set('Authorization', CHAI.users.getTokenByEmail('roro@yopmail.com'))
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body[0].receiver).to.equal(userRoro._id.toString());
+          done();
+        });
+    });
+
+    it('roro ne peux pas faire une FR a jm (in progress)', function (done) {
+      chai.request(CHAI.urlRoot)
+        .post('/api/friendsLists')
+        .set('Authorization', CHAI.users.getTokenByEmail('roro@yopmail.com'))
+        .send({receiver: userJm._id})
+        .end((err, res) => {
+          expect(res).to.have.status(409);
+          done();
+        });
+    });
   });
 });
-
