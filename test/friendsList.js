@@ -9,10 +9,10 @@ chai.use(chaiHttp);
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost/ifocop_RS';
 
-describe('Ajouter un utilisateur à la liste d’amis', function () {
+describe('Ajouter un utilisateur à la liste d’amis', function() {
   let friendList = [];
-  describe('1. Le membre demandeur clique sur un nom de la liste.', function () {
-    it('jm regarde la listes de membres valides', function (done) {
+  describe('1. Le membre demandeur clique sur un nom de la liste.', function() {
+    it('jm regarde la listes de membres valides', function(done) {
       chai.request(CHAI.urlRoot)
         .get('/api/myUsers')
         .set('Authorization', CHAI.users.getTokenByEmail('jm@yopmail.com'))
@@ -27,12 +27,12 @@ describe('Ajouter un utilisateur à la liste d’amis', function () {
     });
   });
 
-  describe('2. Le membre choisi, receveur, est ajouté à la liste d’amis du membre', function () {
+  describe('2. Le membre choisi, receveur, est ajouté à la liste d’amis du membre', function() {
     let userRoro = null;
-    before(function (done) {
-      MongoClient.connect(url, function (err, db) {
+    before(function(done) {
+      MongoClient.connect(url, function(err, db) {
         if (err) throw err;
-        db.collection('myUser').find({'email': 'roro@yopmail.com'}).toArray(function (error, results) {
+        db.collection('myUser').find({'email': 'roro@yopmail.com'}).toArray(function(error, results) {
           userRoro = results[0];
           db.close();
           done();
@@ -40,10 +40,10 @@ describe('Ajouter un utilisateur à la liste d’amis', function () {
       });
     });
     let userJm = null;
-    before(function (done) {
-      MongoClient.connect(url, function (err, db) {
+    before(function(done) {
+      MongoClient.connect(url, function(err, db) {
         if (err) throw err;
-        db.collection('myUser').find({'email': 'jm@yopmail.com'}).toArray(function (error, results) {
+        db.collection('myUser').find({'email': 'jm@yopmail.com'}).toArray(function(error, results) {
           userJm = results[0];
           db.close();
           done();
@@ -51,7 +51,7 @@ describe('Ajouter un utilisateur à la liste d’amis', function () {
       });
     });
 
-    it('jm envoie une friend request à roro', function (done) {
+    it('jm envoie une friend request à roro', function(done) {
       chai.request(CHAI.urlRoot)
         .post('/api/friendsLists')
         .set('Authorization', CHAI.users.getTokenByEmail('jm@yopmail.com'))
@@ -62,7 +62,7 @@ describe('Ajouter un utilisateur à la liste d’amis', function () {
         });
     });
 
-    it('jm ne peux pas renvoyer une deuxieme FR à roro', function (done) {
+    it('jm ne peux pas renvoyer une deuxieme FR à roro', function(done) {
       chai.request(CHAI.urlRoot)
         .post('/api/friendsLists')
         .set('Authorization', CHAI.users.getTokenByEmail('jm@yopmail.com'))
@@ -73,7 +73,7 @@ describe('Ajouter un utilisateur à la liste d’amis', function () {
         });
     });
 
-    it('roro a une FR de la part de jm', function (done) {
+    it('roro a une FR de la part de jm', function(done) {
       chai.request(CHAI.urlRoot)
         .get('/api/friendsLists')
         .set('Authorization', CHAI.users.getTokenByEmail('roro@yopmail.com'))
@@ -84,7 +84,7 @@ describe('Ajouter un utilisateur à la liste d’amis', function () {
         });
     });
 
-    it('roro ne peux pas faire une FR a jm (in progress)', function (done) {
+    it('roro ne peux pas faire une FR a jm (in progress)', function(done) {
       chai.request(CHAI.urlRoot)
         .post('/api/friendsLists')
         .set('Authorization', CHAI.users.getTokenByEmail('roro@yopmail.com'))
