@@ -2,7 +2,6 @@
 'use strict';
 const colors = require('colors');
 const MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://localhost/ifocop_RS';
 
 module.exports = function(Friendslist) {
   Friendslist.beforeRemote('create', function(ctx, modelInstace, next) {
@@ -15,7 +14,7 @@ module.exports = function(Friendslist) {
 
       let $this = Friendslist;
 
-      MongoClient.connect(url, function(err, db) {
+      MongoClient.connect($this.app.get('mongo').url, function(err, db) {
         if (err) throw err;
         db.collection('friendsList').find({
           $or: [
