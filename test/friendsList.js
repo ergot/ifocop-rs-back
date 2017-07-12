@@ -5,6 +5,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
 chai.use(chaiHttp);
+const parameters = require('../server/parameters');
 
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost/ifocop_RS';
@@ -58,6 +59,18 @@ describe('Ajouter un utilisateur à la liste d’amis', function() {
         .send({receiver: userRoro._id})
         .end((err, res) => {
           expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('roro recois un email de notification', function(done){
+      chai.request('https://mailtrap.io/api/v1')
+        .get('/inboxes/214542/messages')
+        .set('Api-Token', parameters.mailtrap['Api-Token'])
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body[0].from_email).to.equal('notification@ifocop-rs.com');
+          expect(res.body[0].to_email).to.equal('roro@yopmail.com');
           done();
         });
     });
