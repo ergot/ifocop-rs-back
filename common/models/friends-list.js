@@ -1,22 +1,12 @@
 /* eslint-disable max-len */
 'use strict';
-
-var MongoClient = require('mongodb').MongoClient;
+const colors = require('colors');
+const MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost/ifocop_RS';
 
 module.exports = function(Friendslist) {
-  Friendslist.sendEmail =  function(cb) {
-    Friendslist.app.models.Email.send({
-      to: 'foo@bar.com',
-      from: 'you@gmail.com',
-      subject: 'my subject',
-      text: 'my text',
-      html: 'my <em>html</em>'}, function(err, mail) {
-      cb(err);
-    });
-  };
-
   Friendslist.beforeRemote('create', function(ctx, modelInstace, next) {
+    // gestion de l'envoie d'une friend request
     if (ctx.req.baseUrl === '/api/friendsLists' & ctx.req.method === 'POST') {
       ctx.req.body.sender = ctx.req.accessToken.userId;
 
@@ -35,7 +25,18 @@ module.exports = function(Friendslist) {
           if (err2) throw err;
           db.close();
           if (results.length === 0) {
-            $this.sendEmail(next);
+            $this.app.models.myUser.findById(receiver, function(err, user) {
+              $this.app.models.Email.send({
+                from: $this.app.get('email').from,
+                to: user.email,
+                subject: 'A new friend request !',
+                html: 'All in the subject baka !',
+              }, function(err) {
+                if (err) return next(err);
+                console.log('mail'.green);
+                return next();
+              });
+            });
           } else {
             const error = new Error('Une friend request est déja en cours');
             error.status = 409;
