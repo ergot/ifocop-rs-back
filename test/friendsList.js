@@ -84,7 +84,7 @@ describe('Ajouter un utilisateur à la liste d’amis', function() {
         });
     });
 
-    it('roro ne peux pas faire une FR a jm (in progress)', function(done) {
+    it('roro ne peux pas faire une FR a jm', function(done) {
       chai.request(CHAI.urlRoot)
         .post('/api/friendsLists')
         .set('Authorization', CHAI.users.getTokenByEmail('roro@yopmail.com'))
