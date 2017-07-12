@@ -9,6 +9,7 @@ const urlRoot = 'http://localhost:3000';
 let usersLogin = require('../server/boot/userFixture');
 const MongoClient = require('mongodb').MongoClient;
 const urlMongo = 'mongodb://localhost/ifocop_RS';
+const parameters = require('../server/parameters');
 
 describe('Delete collections before test', function() {
   it('drop friendsLits', function() {
@@ -18,6 +19,18 @@ describe('Delete collections before test', function() {
         db.close();
       });
     });
+  });
+});
+
+describe('Reset mailTrap', function() {
+  it('drop ifocop-rs inboxe', function(done) {
+    chai.request('https://mailtrap.io/api/v1')
+      .patch('/inboxes/214542/clean')
+      .set('Api-Token', parameters.mailtrap['Api-Token'])
+      .end(function(err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
   });
 });
 
