@@ -51,16 +51,30 @@ module.exports = function(Friendslist) {
   /**
    * Recupere la liste des amis et des FR en cours
    * @param idUser - sender or receiver
+   * @param isConfirmed [boolean] - applique un filtre sur la collection ou pas si undefined( = loopback si pas préciser)
    * @param cb
    */
-  Friendslist.getFriendship = function(idUser, cb) {
-    MongoClient.connect($this.app.get('mongo').url, function(err, db) {
-      if (err) throw err;
-      db.collection('friendsList').find({
+  Friendslist.getFriendship = function(idUser, isConfirmed, cb) {
+    console.log('tolo');
+    console.log(isConfirmed);
+    let filtres = null;
+    if (isConfirmed === undefined) {
+      filtres = {
         $or: [
           {sender: idUser},
           {receiver: idUser}],
-      }).toArray(function(err2, results) {
+      };
+    } else {
+      filtres = {
+        $or: [
+          {sender: idUser, isConfirmed},
+          {receiver: idUser, isConfirmed}],
+      };
+    }
+
+    MongoClient.connect($this.app.get('mongo').url, function(err, db) {
+      if (err) throw err;
+      db.collection('friendsList').find(filtres).toArray(function(err2, results) {
         db.close();
         if (err2) return cb(err2);
         cb(null, results);
@@ -70,7 +84,10 @@ module.exports = function(Friendslist) {
 
   Friendslist.remoteMethod('getFriendship', {
     description: 'Retrieves a user\'s list of friends',
-    accepts: {arg: 'idUser', type: 'string', required: true},
+    accepts: [
+      {arg: 'idUser', type: 'string', required: true, description: 'l id de l user'},
+      {arg: 'isConfirmed', type: 'boolean', description: 'Filtre sur le status de la PR, si vide prend toutes les PR'},
+    ],
     http: {verb: 'get'},
     returns: {arg: 'friendship', type: 'array'},
   });
