@@ -55,8 +55,6 @@ module.exports = function(Friendslist) {
    * @param cb
    */
   Friendslist.getFriendship = function(idUser, isConfirmed, cb) {
-    console.log('tolo');
-    console.log(isConfirmed);
     let filtres = null;
     if (isConfirmed === undefined) {
       filtres = {
@@ -77,6 +75,7 @@ module.exports = function(Friendslist) {
       db.collection('friendsList').find(filtres).toArray(function(err2, results) {
         db.close();
         if (err2) return cb(err2);
+        // @todo: Un message est affiché pour indiquer que la demande a été confirmée
         cb(null, results);
       });
     });
