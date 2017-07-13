@@ -11,6 +11,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost/ifocop_RS';
 
 var userRoro = null;
+let userJm = null;
 
 describe('Ajouter un utilisateur à la liste d’amis', function() {
   before(function(done) {
@@ -23,7 +24,7 @@ describe('Ajouter un utilisateur à la liste d’amis', function() {
       });
     });
   });
-  let userJm = null;
+
   before(function(done) {
     MongoClient.connect(url, function(err, db) {
       if (err) throw err;
@@ -139,6 +140,24 @@ describe('Valider une demande d’ajout à la liste d’amis', function() {
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res.body.id).to.be.equal(friendship[0]._id);
+          done();
+        });
+    });
+  });
+
+  describe('2. Le membre demandeur est ajouté à la liste d’amis du membre receveur avec le statut Confirmé', function() {
+    it('jm est maintenant ami avec roro', function(done) {
+      console.log(userJm);
+      chai.request(CHAI.urlRoot)
+        .get('/api/friendsLists/getFriendship')
+        .send({idUser: userJm._id, isConfirmed: true})
+        .set('Authorization', CHAI.users.getTokenByEmail('jose@yopmail.com'))
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.friendship).to.have.lengthOf(1);
+          expect(res.body.friendship[0].sender).to.equal(userJm._id.toString());
+          expect(res.body.friendship[0].receiver).to.equal(userRoro._id.toString());
+          expect(res.body.friendship[0].isConfirmed).to.be.true;
           done();
         });
     });
