@@ -11,7 +11,6 @@ var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost/ifocop_RS';
 
 describe('Ajouter un utilisateur à la liste d’amis', function() {
-  let friendList = [];
   describe('1. Le membre demandeur clique sur un nom de la liste.', function() {
     it('jm regarde la listes de membres valides', function(done) {
       chai.request(CHAI.urlRoot)
@@ -21,7 +20,6 @@ describe('Ajouter un utilisateur à la liste d’amis', function() {
           expect(res).to.have.status(200);
           res.body.forEach((user) => {
             expect(user.emailVerified).to.equal(true);
-            friendList.push(user);
           });
           done();
         });
