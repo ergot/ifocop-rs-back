@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable max-len,no-unused-expressions */
 /* global CHAI */
 'use strict';
 const chai = require('chai');
@@ -10,8 +10,9 @@ const parameters = require('../server/parameters');
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost/ifocop_RS';
 
+var userRoro = null;
+
 describe('Ajouter un utilisateur à la liste d’amis', function() {
-  let userRoro = null;
   before(function(done) {
     MongoClient.connect(url, function(err, db) {
       if (err) throw err;
@@ -113,25 +114,33 @@ describe('Ajouter un utilisateur à la liste d’amis', function() {
 });
 
 describe('Valider une demande d’ajout à la liste d’amis', function() {
-  it('recuperer toutes les FR d un user', function(done){
+  let friendship = null;
+
+  it('recupere tous les FR d un user', function(done) {
     chai.request(CHAI.urlRoot)
       .get('/api/friendsLists/getFriendship')
+      .send({idUser: userRoro._id})
       .set('Authorization', CHAI.users.getTokenByEmail('jose@yopmail.com'))
       .end((err, res) => {
         expect(res).to.have.status(200);
-        console.log(res.body)
+        expect(res.body.friendship).to.have.lengthOf(1);
+        friendship = res.body.friendship;
         done();
       });
-    done();
   });
 
   describe('1. Le membre receveur est ajouté à la liste d’amis du membre demandeur avec le statu', function() {
     it('roro accepte la fr de jm ', function(done) {
-      //console.log(CHAI.users.getTokenByEmail('roro@yopmail.com'))
-      //console.log(CHAI.users)
-      done();
-
-    })
-  })
-
-})
+      expect(friendship[0].isConfirmed).to.be.false;
+      chai.request(CHAI.urlRoot)
+        .patch(`/api/friendsLists/${friendship[0]._id}`)
+        .send({isConfirmed: true})
+        .set('Authorization', CHAI.users.getTokenByEmail('roro@yopmail.com'))
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.id).to.be.equal(friendship[0]._id);
+          done();
+        });
+    });
+  });
+});
