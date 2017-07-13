@@ -48,4 +48,18 @@ module.exports = function(Friendslist) {
       next();
     }
   });
+
+  Friendslist.getFriendship = function(idUser, cb){
+    console.log('get friend ship'.green)
+    cb(null, 123)
+  };
+
+  Friendslist.remoteMethod('getFriendship', {
+    description: 'Retrieves a user\'s list of friends',
+    accepts: {arg: 'idUser', type: 'string', required: true},
+    http:{verb:'get'},
+    returns: {arg: 'friendship', type: 'string'},
+  });
+
+
 };

@@ -111,3 +111,27 @@ describe('Ajouter un utilisateur à la liste d’amis', function() {
     });
   });
 });
+
+describe('Valider une demande d’ajout à la liste d’amis', function() {
+  it('recuperer toutes les FR d un user', function(done){
+    chai.request(CHAI.urlRoot)
+      .get('/api/friendsLists/getFriendship')
+      .set('Authorization', CHAI.users.getTokenByEmail('jose@yopmail.com'))
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        console.log(res.body)
+        done();
+      });
+    done();
+  });
+
+  describe('1. Le membre receveur est ajouté à la liste d’amis du membre demandeur avec le statu', function() {
+    it('roro accepte la fr de jm ', function(done) {
+      //console.log(CHAI.users.getTokenByEmail('roro@yopmail.com'))
+      //console.log(CHAI.users)
+      done();
+
+    })
+  })
+
+})
