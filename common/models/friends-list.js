@@ -32,6 +32,7 @@ module.exports = function(Friendslist) {
                 html: 'All in the subject baka !',
               }, function(err) {
                 if (err) return next(err);
+                // @todo: Un mail est envoyé au membre choisi pour lui signaler l’invitation
                 console.log('mail'.green);
                 return next();
               });
