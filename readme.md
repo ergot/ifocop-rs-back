@@ -19,10 +19,10 @@ Cette option n’apparaît que sur les profils de membres appartenant à la list
 d’amis avec le statut « en attente de confirmation ».
 
 1. Le membre receveur est ajouté à la liste d’amis du membre demandeur
-avec le statut « Confirmé ».
+avec le statut « Confirmé ». [X][]
 2. Le membre demandeur est ajouté à la liste d’amis du membre receveur
-avec le statut « Confirmé ».
-3. Un message est affiché pour indiquer que la demande a été confirmée.
+avec le statut « Confirmé ».[X][]
+3. Un message est affiché pour indiquer que la demande a été confirmée.[][]
 
 ## C/ Ignorer une demande d’ajout à la liste d’amis
 Cette option n’apparaît que sur les profils de membres appartenant à la liste
