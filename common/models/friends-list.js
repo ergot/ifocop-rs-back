@@ -4,6 +4,8 @@ const colors = require('colors');
 const MongoClient = require('mongodb').MongoClient;
 
 module.exports = function(Friendslist) {
+  let $this = Friendslist;
+
   Friendslist.beforeRemote('create', function(ctx, modelInstace, next) {
     // gestion de l'envoie d'une friend request
     if (ctx.req.baseUrl === '/api/friendsLists' & ctx.req.method === 'POST') {
@@ -11,8 +13,6 @@ module.exports = function(Friendslist) {
 
       const sender = ctx.req.accessToken.userId;
       const receiver = ctx.req.body.receiver;
-
-      let $this = Friendslist;
 
       MongoClient.connect($this.app.get('mongo').url, function(err, db) {
         if (err) throw err;
@@ -48,18 +48,30 @@ module.exports = function(Friendslist) {
       next();
     }
   });
-
-  Friendslist.getFriendship = function(idUser, cb){
-    console.log('get friend ship'.green)
-    cb(null, 123)
+  /**
+   * Recupere la liste des amis et des FR en cours
+   * @param idUser - sender or receiver
+   * @param cb
+   */
+  Friendslist.getFriendship = function(idUser, cb) {
+    MongoClient.connect($this.app.get('mongo').url, function(err, db) {
+      if (err) throw err;
+      db.collection('friendsList').find({
+        $or: [
+          {sender: idUser},
+          {receiver: idUser}],
+      }).toArray(function(err2, results) {
+        db.close();
+        if (err2) return cb(err2);
+        cb(null, results);
+      });
+    });
   };
 
   Friendslist.remoteMethod('getFriendship', {
     description: 'Retrieves a user\'s list of friends',
     accepts: {arg: 'idUser', type: 'string', required: true},
-    http:{verb:'get'},
-    returns: {arg: 'friendship', type: 'string'},
+    http: {verb: 'get'},
+    returns: {arg: 'friendship', type: 'array'},
   });
-
-
 };
