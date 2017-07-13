@@ -147,7 +147,6 @@ describe('Valider une demande d’ajout à la liste d’amis', function() {
 
   describe('2. Le membre demandeur est ajouté à la liste d’amis du membre receveur avec le statut Confirmé', function() {
     it('jm est maintenant ami avec roro', function(done) {
-      console.log(userJm);
       chai.request(CHAI.urlRoot)
         .get('/api/friendsLists/getFriendship')
         .send({idUser: userJm._id, isConfirmed: true})
