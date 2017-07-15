@@ -31,3 +31,33 @@ d’amis avec le statut « en attente de confirmation ».
 1. Le membre est de la liste d’amis du membre demandeur.[X][]
 2. Retire le membre de la liste d’amis du membre receveur.[X][]
 3. Affiche un message pour indiquer que la demande a été ignorée.[][]
+
+# Recommandation
+
+## Recommander un ajout à la liste d’amis
+Cette option n’apparaît que sur les profils de membres appartenant à la
+liste d’amis avec le statut «confirmé».
+
+1. Une liste de sélection s’affiche avec la liste d’amis possédant le
+statut «confirmé».
+2. Si le membre sélectionne un ami, celui-ci est ajouté à la liste
+d’amis de l’ami avec le statut «
+recommandé » et l’identifiant du membre à l’origine de la recommandation.
+3. Une notification est envoyée par mail à l’adresse du membre pour lui
+signaler la recommandation.
+4. Un message est affiché au membre qui a fait la recommandation pour
+indiquer que celle-ci a été envoyée.
+
+## Valider une recommandation d’ajout à la liste d’amis
+Cette option apparaît dans le profil de l'utilisateur uniquement sur les
+utilisateurs appartenant à la liste d’amis avec le statut « recommandé »
+et l’identifiant de l’utilisateur à l’origine de la recommandation.
+
+1. c.f. Ajouter un ami à la liste d’amis.
+
+## Ignorer une recommandation d’ajout à la liste d’amis
+Cette option apparaît dans le profil du membre uniquement sur les membres
+appartenant à la liste d’amis avec le statut «recommandé» et
+l’identifiant de membre à l’origine de la recommandation.
+
+1. c.f. Ignorer une demande d’ajout à la liste d’amis.
