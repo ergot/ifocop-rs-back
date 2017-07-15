@@ -177,6 +177,7 @@ describe('Ignorer une demande d’ajout à la liste d’amis', function() {
     });
   });
 
+  let joseFrRoro = null;
   before(function(done) {
     MongoClient.connect(url, function(err, db) {
       if (err) throw err;
@@ -184,8 +185,9 @@ describe('Ignorer une demande d’ajout à la liste d’amis', function() {
         'sender': userJose['_id'].toString(),
         'receiver': userRoro['_id'].toString(),
         'isConfirmed': false,
-      }, function(error) {
+      }, function(error, result) {
         if (error) throw error;
+        joseFrRoro = result.ops[0];
         db.close();
         done();
       });
@@ -203,6 +205,19 @@ describe('Ignorer une demande d’ajout à la liste d’amis', function() {
           expect(res.body.friendship[0].sender).to.equal(userJose['_id'].toString());
           expect(res.body.friendship[0].receiver).to.equal(userRoro['_id'].toString());
           expect(res.body.friendship[0].isConfirmed).to.equal(false);
+          done();
+        });
+    });
+  });
+
+  describe('2. Retire le membre de la liste d’amis du membre receveur.', function() {
+    it('roro refuse la FR de jose', function(done) {
+      chai.request(CHAI.urlRoot)
+        .delete(`/api/friendsLists/${joseFrRoro._id.toString()}`)
+        .set('Authorization', CHAI.users.getTokenByEmail('roro@yopmail.com'))
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.count).to.equal(1);
           done();
         });
     });
