@@ -162,3 +162,49 @@ describe('Valider une demande d’ajout à la liste d’amis', function() {
     });
   });
 });
+
+let userJose = null;
+describe('Ignorer une demande d’ajout à la liste d’amis', function() {
+  before(function(done) {
+    MongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      db.collection('myUser').find({'email': 'jose@yopmail.com'}).toArray(function(error, results) {
+        if (error) throw error;
+        userJose = results[0];
+        db.close();
+        done();
+      });
+    });
+  });
+
+  before(function(done) {
+    MongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      db.collection('friendsList').insertOne({
+        'sender': userJose['_id'].toString(),
+        'receiver': userRoro['_id'].toString(),
+        'isConfirmed': false,
+      }, function(error) {
+        if (error) throw error;
+        db.close();
+        done();
+      });
+    });
+  });
+
+  describe('1. Le membre est de la liste d’amis du membre demandeur.', function() {
+    it('roro est une fr en attente de jose', function(done) {
+      chai.request(CHAI.urlRoot)
+        .get('/api/friendsLists/getFriendship')
+        .send({idUser: userRoro._id, isConfirmed: false})
+        .set('Authorization', CHAI.users.getTokenByEmail('roro@yopmail.com'))
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.friendship[0].sender).to.equal(userJose['_id'].toString());
+          expect(res.body.friendship[0].receiver).to.equal(userRoro['_id'].toString());
+          expect(res.body.friendship[0].isConfirmed).to.equal(false);
+          done();
+        });
+    });
+  });
+});
