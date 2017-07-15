@@ -28,6 +28,6 @@ avec le statut « Confirmé ».[X][]
 Cette option n’apparaît que sur les profils de membres appartenant à la liste
 d’amis avec le statut « en attente de confirmation ».
 
-1. Le membre est de la liste d’amis du membre demandeur.
-2. Retire le membre de la liste d’amis du membre receveur.
-3. Affiche un message pour indiquer que la demande a été ignorée.
+1. Le membre est de la liste d’amis du membre demandeur.[X][]
+2. Retire le membre de la liste d’amis du membre receveur.[X][]
+3. Affiche un message pour indiquer que la demande a été ignorée.[][]
