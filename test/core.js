@@ -12,11 +12,12 @@ const urlMongo = 'mongodb://localhost/ifocop_RS';
 const parameters = require('../server/parameters');
 
 describe('Delete collections before test', function() {
-  it('drop friendsLits', function() {
+  it('drop friendsLits', function(done) {
     MongoClient.connect(urlMongo, function(err, db) {
       db.collection('friendsList').drop(function(err) {
         if (err) throw err;
         db.close();
+        done();
       });
     });
   });
