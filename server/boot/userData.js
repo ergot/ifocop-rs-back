@@ -1,69 +1,44 @@
 'use strict';
+const userFixture = require('./userFixture');
 module.exports = function (app) {
   const Role = app.models.Role;
   const RoleMapping = app.models.RoleMapping;
   // 'name' of your mongo connector, you can find it in datasource.json
 
+  function setRole(roleName, users) {
+    Role.create({
+      name: roleName,
+    }, function (err, role) {
+      if (err) throw err;
+      const toto = (function () {
+        let data = [];
+        users.forEach((user) => {
+          data.push(
+            {
+              principalType: RoleMapping.USER,
+              principalId: user.id,
+            }
+          );
+        });
+        return data;
+      })();
+
+      role.principals.create(toto, function (err, principal) {
+        if (err) throw err;
+        //console.log(principal);
+      });
+    });
+  }
+
   // WARNING: Calling this function deletes all data! Use autoupdate() to preserve data.
   app.dataSources.mongoDs.automigrate('myUser', function (err) {
     if (err) throw err;
 
-    app.models.myUser.create([{
-      email: 'admin@yopmail.com',
-      password: 'admin',
-      verificationToken: null,
-      emailVerified: true,
-    }, {
-      email: 'jose@yopmail.com',
-      password: 'jose',
-      verificationToken: null,
-      emailVerified: true,
-    }, {
-      email: 'user1@yopmail.com',
-      password: 'user',
-      verificationToken: null,
-      emailVerified: true,
-    }, {
-      email: 'user2@yopmail.com',
-      password: 'user',
-      verificationToken: null,
-      emailVerified: true,
-    }], function(err, users) {
+    app.models.myUser.create(userFixture, function (err, users) {
       if (err) throw err;
-      // console.log('Models created: \n', users);
-
-      // create the admin role
-      Role.create({
-        name: 'admin',
-      }, function(err, role) {
-        if (err) throw err;
-        console.log('Created role:', role);
-        // make admin an admin
-        role.principals.create({
-          principalType: RoleMapping.USER,
-          principalId: users[0].id,
-        }, function(err, principal) {
-          if (err) throw err;
-
-          console.log('set admin role:', principal);
-        });
-      });
-
-      // create the member role
-      Role.create({
-        name: 'member',
-      }, function (err, role) {
-        if (err) throw err;
-        console.log('Created role:', role);
-        // make admin an admin
-        role.principals.create({
-          principalType: RoleMapping.USER,
-          principalId: users[1].id,
-        }, function (err, principal) {
-          if (err) throw err;
-          console.log('Created set member role:', principal);
-        });
-      });
+      setRole('admin', [users[0]]);
+      users.splice(0, 1); // !splice retourne la valeur supprimé
+      setRole('member', users);
     });
   });
 };
