@@ -9,9 +9,9 @@ module.exports = function(Friendslist) {
   Friendslist.beforeRemote('create', function(ctx, modelInstace, next) {
     // gestion de l'envoie d'une friend request
     if (ctx.req.baseUrl === '/api/friendsLists' & ctx.req.method === 'POST') {
-      ctx.req.body.sender = ctx.req.accessToken.userId;
+      //console.log(ctx.req.accessToken.userId);
 
-      const sender = ctx.req.accessToken.userId;
+      const sender = ctx.req.body.sender;
       const receiver = ctx.req.body.receiver;
 
       MongoClient.connect($this.app.get('mongo').url, function(err, db) {
