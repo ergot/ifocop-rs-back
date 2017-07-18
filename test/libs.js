@@ -56,7 +56,6 @@ function setTokenUsers(callbackMaster, users) {
   });
 }
 
-
 /**
  * Recupere les users
  * @param callback - Faire une callback maison pour recupere la valeur dans les tests
@@ -101,8 +100,25 @@ function dropCollection(done, collectionName) {
   });
 }
 
+/**
+ * Recherche dans une collection
+ * @param data - une collection
+ * @param where -  la propriété de la collection
+ * @param equal - la valeur attendus de la propriété
+ * @param target - la propriete à retourner
+ * @returns {*}
+ */
+function findIn(data, where, equal, target) {
+  for (let i = 0; data; i++) {
+    if (data[i][where] === equal) {
+      return data[i][target];
+    }
+  }
+}
+
 module.exports = {
   addFriendsList,
   dropCollection,
   getUsers,
+  findIn,
 };
