@@ -3,14 +3,16 @@ const configLocal = require('../server/config.local');
 const MongoClient = require('mongodb').MongoClient;
 const users = require('../server/boot/userFixture');
 const async = require('async');
-
-
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const expect = chai.expect;
+chai.use(chaiHttp);
 
 /**
  * Ajoute l id aux users
  * @param users
  */
-function addIdUsers(users) {
+function setIdUsers(callbackMaster, users) {
   async.each(users, function(user, callback) {
     MongoClient.connect(configLocal.mongo.url, function(err, db) {
       if (err) throw err;
@@ -24,10 +26,54 @@ function addIdUsers(users) {
     });
   }, function(err) {
     if (err) throw err;
+    callbackMaster(null);
   });
 }
 
-addIdUsers(users);
+function setTokenUsers(callbackMaster, users) {
+  async.each(users, function(user, callback) {
+    chai.request('http://localhost:3000')
+      .post('/api/myUsers/login')
+      .send(user)
+      .end(function(err, res) {
+        expect(res).to.satisfy(() => {
+          if (res.statusCode === 200) {
+            expect(res.body.id, 'Pas de token').to.exist;
+            user.token = res.body.id;
+            return true;
+          }
+          if (res.statusCode === 401) {
+            expect(res.body.id).to.be.undefinded;
+            user.token = res.body.id;
+            return true;
+          }
+        });
+        callback();
+      });
+  }, function(err) {
+    if (err) throw err;
+    callbackMaster(null);
+  });
+}
+
+
+/**
+ * Recupere les users
+ * @param callback - Faire une callback maison pour recupere la valeur dans les tests
+ */
+function getUsers(callback) {
+  async.parallel([
+    function(callback) {
+      setIdUsers(callback, users);
+    },
+    function(callback) {
+      setTokenUsers(callback, users);
+    },
+  ], function(err) {
+    if (err) throw err;
+    callback(users);
+  });
+}
 
 function addFriendsList(done, senderId, receiverId, isConfirmed) {
   MongoClient.connect(configLocal.mongo.url, function(err, db) {
@@ -58,4 +104,5 @@ function dropCollection(done, collectionName) {
 module.exports = {
   addFriendsList,
   dropCollection,
+  getUsers,
 };
