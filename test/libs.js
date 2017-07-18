@@ -117,6 +117,7 @@ function findIn(data, where, equal, target) {
 }
 
 module.exports = {
+  host:{url:'http://localhost:3000'},
   addFriendsList,
   dropCollection,
   getUsers,
