@@ -7,6 +7,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
 chai.use(chaiHttp);
+const parameters = require('../server/parameters');
 
 /**
  * Ajoute l id aux users
@@ -116,10 +117,22 @@ function findIn(data, where, equal, target) {
   }
 }
 
+function clearMailTrap (done){
+  chai.request('https://mailtrap.io/api/v1')
+    .patch('/inboxes/214542/clean')
+    .set('Api-Token', parameters.mailtrap['Api-Token'])
+    .end(function(err, res) {
+      expect(res).to.have.status(200);
+      done();
+    });
+}
+
 module.exports = {
   host:{url:'http://localhost:3000'},
+  parameters,
   addFriendsList,
   dropCollection,
   getUsers,
   findIn,
+  clearMailTrap
 };
