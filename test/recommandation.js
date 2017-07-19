@@ -14,6 +14,10 @@ describe('Recommandation', function() {
   let idJm = null;
   let idRoro = null;
 
+  before('clear mailtrap', function(done) {
+    libs.clearMailTrap(done);
+  });
+
   before('drop friendlist', function(done) {
     libs.dropCollection(done, 'friendsList');
   });
@@ -76,10 +80,21 @@ describe('Recommandation', function() {
     });
   });
 
-  describe('Une notification est envoyée par mail à l’adresse du membre pour lui signaler la recommandation', function(){
-    it('Envoie des emails de notifications', function(done){
-      done()
-    })
-  })
+  describe('Une notification est envoyée par mail à l’adresse du membre pour lui signaler la recommandation', function() {
+    it('Envoie des emails de notifications', function(done) {
+      chai.request('https://mailtrap.io/api/v1')
+        .get('/inboxes/214542/messages')
+        .set('Api-Token', libs.parameters.mailtrap['Api-Token'])
+        .end((err, res) => {
+          console.log(res.body.length);
+          expect(res).to.have.status(200);
+
+          expect(res.body[0].from_email).to.equal('notification@ifocop-rs.com');
+          expect(res.body[0].to_email).to.equal('roro@yopmail.com');
+          expect(res.body[0].subject).to.equal('Une nouvelle reco !');
+          done();
+        });
+    });
+  });
 });//
 
