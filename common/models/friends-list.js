@@ -2,6 +2,7 @@
 'use strict';
 const colors = require('colors');
 const MongoClient = require('mongodb').MongoClient;
+const async = require('async');
 
 module.exports = function(Friendslist) {
   let $this = Friendslist;
@@ -9,10 +10,11 @@ module.exports = function(Friendslist) {
   Friendslist.beforeRemote('create', function(ctx, modelInstace, next) {
     // gestion de l'envoie d'une friend request
     if (ctx.req.baseUrl === '/api/friendsLists' & ctx.req.method === 'POST') {
-      //console.log(ctx.req.accessToken.userId);
+      // console.log(ctx.req.accessToken.userId);
 
       const sender = ctx.req.body.sender;
       const receiver = ctx.req.body.receiver;
+      const idReco = ctx.req.body.idReco;
 
       MongoClient.connect($this.app.get('mongo').url, function(err, db) {
         if (err) throw err;
@@ -25,10 +27,14 @@ module.exports = function(Friendslist) {
           db.close();
           if (results.length === 0) {
             $this.app.models.myUser.findById(receiver, function(err, user) {
+
+              let subject = 'A new friend request !';
+              if (idReco) subject = 'Une nouvelle reco !'
+
               $this.app.models.Email.send({
                 from: $this.app.get('email').from,
                 to: user.email,
-                subject: 'A new friend request !',
+                subject: subject,
                 html: 'All in the subject baka !',
               }, function(err) {
                 if (err) return next(err);
