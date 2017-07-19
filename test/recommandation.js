@@ -63,6 +63,23 @@ describe('Recommandation', function() {
           done();
         });
     });
+
+    it('jose ne peut pas refaire la meme reco', function(done) {
+      chai.request(libs.host.url)
+        .post('/api/friendsLists')
+        .set('Authorization', tokenJose)
+        .send({sender: idJm, receiver: idRoro, idReco: idJose})
+        .end((err, res) => {
+          expect(res).to.have.status(409);
+          done();
+        });
+    });
   });
+
+  describe('Une notification est envoyée par mail à l’adresse du membre pour lui signaler la recommandation', function(){
+    it('Envoie des emails de notifications', function(done){
+      done()
+    })
+  })
 });//
 
