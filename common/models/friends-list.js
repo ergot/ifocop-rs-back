@@ -39,6 +39,7 @@ module.exports = function(Friendslist) {
               }, function(err) {
                 if (err) return next(err);
                 // @todo: Un mail est envoyé au membre choisi pour lui signaler l’invitation
+                // @todo: if(idReco) notif pour la reco
                 console.log('mail'.green);
                 return next();
               });
