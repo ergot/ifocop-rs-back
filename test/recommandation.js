@@ -6,13 +6,17 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const expect = chai.expect;
 chai.use(chaiHttp);
+const MongoClient = require('mongodb').MongoClient;
 
 describe('Recommandation', function() {
   let users = null;
   let idJose = null;
   let tokenJose = null;
+  let tokenJm = null;
+  let tokenRoro = null;
   let idJm = null;
   let idRoro = null;
+  let idSam = null;
 
   before('clear mailtrap', function(done) {
     libs.clearMailTrap(done);
@@ -27,8 +31,11 @@ describe('Recommandation', function() {
       users = data;
       idJose = libs.findIn(users, 'email', 'jose@yopmail.com', 'id');
       tokenJose = libs.findIn(users, 'email', 'jose@yopmail.com', 'token');
+      tokenJm = libs.findIn(users, 'email', 'jm@yopmail.com', 'token');
+      tokenRoro = libs.findIn(users, 'email', 'roro@yopmail.com', 'token');
       idJm = libs.findIn(users, 'email', 'jm@yopmail.com', 'id');
       idRoro = libs.findIn(users, 'email', 'roro@yopmail.com', 'id');
+      idSam = libs.findIn(users, 'email', 'sam@yopmail.com', 'id');
       done();
     });
   });
@@ -42,7 +49,6 @@ describe('Recommandation', function() {
 
   describe('Une liste de sélection s’affiche avec la liste d’amis possédant les tatut «confirmé».', function() {
     it('jose a roro et jm en amie confirmé', function(done) {
-      // console.log(users)
       chai.request(libs.host.url)
         .get('/api/friendsLists/getFriendship')
         .set('Authorization', tokenJose)
@@ -86,12 +92,82 @@ describe('Recommandation', function() {
         .get('/inboxes/214542/messages')
         .set('Api-Token', libs.parameters.mailtrap['Api-Token'])
         .end((err, res) => {
-          console.log(res.body.length);
           expect(res).to.have.status(200);
-
           expect(res.body[0].from_email).to.equal('notification@ifocop-rs.com');
           expect(res.body[0].to_email).to.equal('roro@yopmail.com');
           expect(res.body[0].subject).to.equal('Une nouvelle reco !');
+          done();
+        });
+    });
+  });
+
+  describe('Valider une recommandation d’ajout à la liste d’amis', function() {
+    let idFr = null;
+    it('jm vois une FR qui est une reco', function(done) {
+      chai.request(libs.host.url)
+        .get('/api/friendsLists/getFriendShip')
+        .set('Authorization', tokenJm)
+        .send({idUser: idJm})
+        .end((err, res) => {
+          let totalReco = 0;
+          res.body.friendship.forEach((friend) => {
+            if (friend.idReco) {
+              expect(friend.isConfirmed).to.be.false;
+              expect(friend.idReco).to.exist;
+              idFr = friend._id;
+              totalReco++;
+            }
+          });
+          expect(totalReco).to.equal(1);
+          done();
+        });
+    });
+
+    it('jm accepte la reco', function(done) {
+      chai.request(libs.host.url)
+        .patch(`/api/friendsLists/${idFr}`)
+        .send({isConfirmed: true})
+        .set('Authorization', tokenJm)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.id).to.be.equal(idFr);
+          expect(res.body.isConfirmed).to.be.equal(true);
+          done();
+        });
+    });
+  });
+
+  describe('Ignorer une recommandation d’ajout à la liste d’amis', function() {
+    before('reco jose: roro - sam', function(done) {
+      libs.addFriendsList(done, idRoro, idSam, false, idJose);
+    });
+
+    let frRoro = null;
+    before(function(done) {
+      MongoClient.connect(libs.configLocal.mongo.url, function(err, db) {
+        if (err) throw err;
+        db.collection('friendsList').insertOne({
+          'sender': idRoro,
+          'receiver': idSam,
+          'isConfirmed': false,
+          'idReco': idJose,
+
+        }, function(error, result) {
+          if (error) throw error;
+          frRoro = result.ops[0];
+          db.close();
+          done();
+        });
+      });
+    });
+
+    it('roro delete la reco avec sam', function(done) {
+      chai.request(libs.host.url)
+        .delete(`/api/friendsLists/${frRoro._id.toString()}`)
+        .set('Authorization', tokenRoro)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.count).to.equal(1);
           done();
         });
     });
