@@ -118,7 +118,7 @@ function findIn(data, where, equal, target) {
   }
 }
 
-function clearMailTrap (done){
+function clearMailTrap(done) {
   chai.request('https://mailtrap.io/api/v1')
     .patch('/inboxes/214542/clean')
     .set('Api-Token', parameters.mailtrap['Api-Token'])
@@ -129,11 +129,11 @@ function clearMailTrap (done){
 }
 
 module.exports = {
-  host:{url:'http://localhost:3000'},
+  host: {url: 'http://localhost:3000'},
   parameters,
   addFriendsList,
   dropCollection,
   getUsers,
   findIn,
-  clearMailTrap
+  clearMailTrap,
 };
