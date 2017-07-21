@@ -131,6 +131,7 @@ function clearMailTrap(done) {
 module.exports = {
   host: {url: 'http://localhost:3000'},
   parameters,
+  configLocal,
   addFriendsList,
   dropCollection,
   getUsers,
