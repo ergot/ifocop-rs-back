@@ -75,13 +75,14 @@ function getUsers(callback) {
   });
 }
 
-function addFriendsList(done, senderId, receiverId, isConfirmed) {
+function addFriendsList(done, senderId, receiverId, isConfirmed, idReco) {
   MongoClient.connect(configLocal.mongo.url, function(err, db) {
     if (err) throw err;
     const dataInsert = {
       'sender': senderId,
       'receiver': receiverId,
       'isConfirmed': isConfirmed || false,
+      'idReco': idReco || null,
     };
     db.collection('friendsList').insertOne(dataInsert, function(error, result) {
       db.close();
