@@ -36,7 +36,7 @@ describe('myUser', function() {
         .set('Authorization', adminToken)
         .end((err, res) => {
           expect(res).to.have.status(200);
-          expect(res.body.length).to.equal(5);
+          expect(res.body.length).to.equal(6);
           done();
         });
     });

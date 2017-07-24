@@ -6,6 +6,7 @@ const chaiHttp = require('chai-http');
 const expect = chai.expect;
 chai.use(chaiHttp);
 const parameters = require('../server/parameters');
+const libs = require('./libs');
 
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost/ifocop_RS';
@@ -56,7 +57,7 @@ describe('Ajouter un utilisateur à la liste d’amis', function() {
       chai.request(CHAI.urlRoot)
         .post('/api/friendsLists')
         .set('Authorization', CHAI.users.getTokenByEmail('jm@yopmail.com'))
-        .send({receiver: userRoro._id})
+        .send({receiver: userRoro._id, sender: userJm._id})
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
@@ -67,7 +68,7 @@ describe('Ajouter un utilisateur à la liste d’amis', function() {
       chai.request(CHAI.urlRoot)
         .post('/api/friendsLists')
         .set('Authorization', CHAI.users.getTokenByEmail('jm@yopmail.com'))
-        .send({receiver: userRoro._id})
+        .send({receiver: userRoro._id, sender: userJm._id})
         .end((err, res) => {
           expect(res).to.have.status(409);
           done();
@@ -91,7 +92,7 @@ describe('Ajouter un utilisateur à la liste d’amis', function() {
       chai.request(CHAI.urlRoot)
         .post('/api/friendsLists')
         .set('Authorization', CHAI.users.getTokenByEmail('roro@yopmail.com'))
-        .send({receiver: userJm._id})
+        .send({receiver: userJm._id, sender: userRoro._id})
         .end((err, res) => {
           expect(res).to.have.status(409);
           done();

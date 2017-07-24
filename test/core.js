@@ -10,13 +10,15 @@ let usersLogin = require('../server/boot/userFixture');
 const MongoClient = require('mongodb').MongoClient;
 const urlMongo = 'mongodb://localhost/ifocop_RS';
 const parameters = require('../server/parameters');
+const async = require('async');
 
 describe('Delete collections before test', function() {
-  it('drop friendsLits', function() {
+  it('drop friendsLits', function(done) {
     MongoClient.connect(urlMongo, function(err, db) {
       db.collection('friendsList').drop(function(err) {
         if (err) throw err;
         db.close();
+        done();
       });
     });
   });
@@ -69,5 +71,25 @@ describe('Get token', function() {
         }
       }
     };
+  });
+
+  // ajoute l id dans le users
+  after((done) => {
+    async.each(global.CHAI.users, function(user, callback) {
+    // console.log('start')
+      MongoClient.connect(urlMongo, function(err, db) {
+        if (err) throw err;
+        var query = {email: user.email};
+        db.collection('myUser').find(query).toArray(function(err, result) {
+          if (err) throw err;
+          user.id = result[0]._id.toString();
+          db.close();
+          callback();
+        });
+      });
+    }, function(err) {
+      if (err) throw  err;
+      done();
+    });
   });
 });

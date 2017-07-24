@@ -24,4 +24,9 @@ module.exports = [{
   password: 'password',
   verificationToken: null,
   emailVerified: true,
+}, {
+  email: 'sam@yopmail.com',
+  password: 'password',
+  verificationToken: null,
+  emailVerified: true,
 }];

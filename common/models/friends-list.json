@@ -18,6 +18,10 @@
       "type": "boolean",
       "required": true,
       "default": false
+    },
+    "idReco":{
+      "type": "string",
+      "default": null
     }
   },
   "validations": [],

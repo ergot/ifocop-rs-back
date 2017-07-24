@@ -39,25 +39,25 @@ Cette option n’apparaît que sur les profils de membres appartenant à la
 liste d’amis avec le statut «confirmé».
 
 1. Une liste de sélection s’affiche avec la liste d’amis possédant le
-statut «confirmé».
+statut «confirmé».[X][]
 2. Si le membre sélectionne un ami, celui-ci est ajouté à la liste
 d’amis de l’ami avec le statut «
-recommandé » et l’identifiant du membre à l’origine de la recommandation.
+recommandé » et l’identifiant du membre à l’origine de la recommandation.[X][]
 3. Une notification est envoyée par mail à l’adresse du membre pour lui
-signaler la recommandation.
+signaler la recommandation.[X][]
 4. Un message est affiché au membre qui a fait la recommandation pour
-indiquer que celle-ci a été envoyée.
+indiquer que celle-ci a été envoyée.[][]
 
 ## Valider une recommandation d’ajout à la liste d’amis
 Cette option apparaît dans le profil de l'utilisateur uniquement sur les
 utilisateurs appartenant à la liste d’amis avec le statut « recommandé »
 et l’identifiant de l’utilisateur à l’origine de la recommandation.
 
-1. c.f. Ajouter un ami à la liste d’amis.
+1. c.f. Ajouter un ami à la liste d’amis. [X][]
 
 ## Ignorer une recommandation d’ajout à la liste d’amis
 Cette option apparaît dans le profil du membre uniquement sur les membres
 appartenant à la liste d’amis avec le statut «recommandé» et
 l’identifiant de membre à l’origine de la recommandation.
 
-1. c.f. Ignorer une demande d’ajout à la liste d’amis.
+1. c.f. Ignorer une demande d’ajout à la liste d’amis.[X][]
