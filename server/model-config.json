@@ -48,5 +48,9 @@
   "friendsList": {
     "dataSource": "mongoDs",
     "public": true
+  },
+  "wall": {
+    "dataSource": "mongoDs",
+    "public": true
   }
 }

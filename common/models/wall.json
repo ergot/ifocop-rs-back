@@ -1,27 +1,18 @@
 {
-  "name": "friendsList",
+  "name": "wall",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "sender": {
+    "message": {
       "type": "string",
       "required": true
     },
-    "receiver": {
-      "type": "string",
+    "dateCreated": {
+      "type": "date",
       "required": true
-    },
-    "isConfirmed": {
-      "type": "boolean",
-      "required": true,
-      "default": false
-    },
-    "idReco": {
-      "type": "string",
-      "default": null
     }
   },
   "validations": [],
