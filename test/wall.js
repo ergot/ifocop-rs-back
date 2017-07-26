@@ -12,6 +12,8 @@ describe('Publications sur le profil', function() {
   let users = null;
   let userJose = null;
   let userAdmin = null;
+  let userRoro = null;
+
   before('drop friendlist', function(done) {
     libs.dropCollection(done, 'wall');
   });
@@ -35,8 +37,13 @@ describe('Publications sur le profil', function() {
     });
   });
 
-  describe('publier un message', function() {
+  before('user roro', function() {
+    userRoro = users.find(function(user) {
+      return user.email === 'roro@yopmail.com';
+    });
+  });
 
+  describe('publier un message', function() {
     it('unverified publie sur le profil de jose', function(done) {
       chai.request(libs.host.url)
         .post(`/api/myUsers/${userJose.id}/walls`)
@@ -59,17 +66,56 @@ describe('Publications sur le profil', function() {
     });
 
     it('admin publie sur le profil de jose ', function(done) {
-      console.log(userJose);
-      console.log(userAdmin);
       chai.request(libs.host.url)
         .post(`/api/myUsers/${userJose.id}/walls`)
         .set('Authorization', userAdmin.token)
         .send({message: 'message de admin', dateCreated: new Date()})
         .end((err, res) => {
-          console.log(res.body)
           expect(res).to.have.status(200);
           done();
         });
     });
   });
-});
+
+  describe('publier un message sur le profil d un ami', function() {
+    before('jose ami avec roro', function(done) {
+      libs.mongo.client.connect(libs.mongo.url, function(err, db) {
+        if (err) throw err;
+        console.log(userJose)
+        console.log(userRoro)
+        db.collection('friendsList').insertOne({
+          'sender': userJose.id,
+          'receiver': userRoro.id,
+          'isConfirmed': true,
+        }, function(error, result) {
+          if (error) throw error;
+          db.close();
+          done();
+        });
+      });
+    });
+
+    it('roro poste un message sur le mur de jose', function(done){
+      chai.request(libs.host.url)
+        .post(`/api/myUsers/${userJose.id}/walls`)
+        .set('Authorization', userRoro.token)
+        .send({message: 'message de roro sur le mur de jose', dateCreated: new Date(), friendId: userRoro.id})
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    })
+
+    it('l admin poste un message sur le mur de jose', function(done){
+      chai.request(libs.host.url)
+        .post(`/api/myUsers/${userJose.id}/walls`)
+        .set('Authorization', userAdmin.token)
+        .send({message: 'message de l  admin sur le mur de jose', dateCreated: new Date(), friendId: userAdmin.id})
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    })
+
+  });
+});//
