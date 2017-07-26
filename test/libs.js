@@ -95,7 +95,7 @@ function addFriendsList(done, senderId, receiverId, isConfirmed, idReco) {
 function dropCollection(done, collectionName) {
   MongoClient.connect(configLocal.mongo.url, function(err, db) {
     db.collection(collectionName).drop(function(err) {
-      if (err) throw err;
+      //if (err) throw err;
       db.close();
       done();
     });
@@ -130,6 +130,10 @@ function clearMailTrap(done) {
 
 module.exports = {
   host: {url: 'http://localhost:3000'},
+  mongo: {
+    url: 'mongodb://localhost/ifocop_RS',
+    client: MongoClient,
+  },
   parameters,
   configLocal,
   addFriendsList,
