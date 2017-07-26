@@ -32,7 +32,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "walls": {
+      "type": "hasMany",
+      "model": "wall",
+      "foreignKey": ""
+    }
+  },
   "acls": [
     {
       "accessType": "EXECUTE",
@@ -47,6 +53,13 @@
       "principalId": "member",
       "permission": "ALLOW",
       "property": "find"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "__create__walls"
     }
   ],
   "methods": {}
