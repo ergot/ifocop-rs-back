@@ -31,7 +31,7 @@ describe('Publications sur le profil', function() {
 
   before('user admin', function() {
     userAdmin = users.find(function(user) {
-      return user.email === 'jose@yopmail.com';
+      return user.email === 'admin@yopmail.com';
     });
   });
 
@@ -48,11 +48,10 @@ describe('Publications sur le profil', function() {
     });
 
     it('jose publie sur son profil', function(done) {
-      console.log(userJose);
       chai.request(libs.host.url)
         .post(`/api/myUsers/${userJose.id}/walls`)
         .set('Authorization', userJose.token)
-        .send({message: 'yolo', dateCreated: new Date()})
+        .send({message: 'message de jose', dateCreated: new Date()})
         .end((err, res) => {
           expect(res).to.have.status(200);
           done();
@@ -61,11 +60,13 @@ describe('Publications sur le profil', function() {
 
     it('admin publie sur le profil de jose ', function(done) {
       console.log(userJose);
+      console.log(userAdmin);
       chai.request(libs.host.url)
         .post(`/api/myUsers/${userJose.id}/walls`)
-        .set('Authorization', userJose.token)
-        .send({message: 'yolo', dateCreated: new Date()})
+        .set('Authorization', userAdmin.token)
+        .send({message: 'message de admin', dateCreated: new Date()})
         .end((err, res) => {
+          console.log(res.body)
           expect(res).to.have.status(200);
           done();
         });
