@@ -53,6 +53,12 @@
       "principalId": "member",
       "permission": "ALLOW",
       "property": "find"
+    },{
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "__create__walls"
     },
     {
       "accessType": "EXECUTE",
