@@ -13,6 +13,11 @@
     "dateCreated": {
       "type": "date",
       "required": true
+    },
+    "friendId": {
+      "type": "string",
+      "required": false,
+      "default": null
     }
   },
   "validations": [],

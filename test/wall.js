@@ -81,8 +81,8 @@ describe('Publications sur le profil', function() {
     before('jose ami avec roro', function(done) {
       libs.mongo.client.connect(libs.mongo.url, function(err, db) {
         if (err) throw err;
-        console.log(userJose)
-        console.log(userRoro)
+        console.log(userJose);
+        console.log(userRoro);
         db.collection('friendsList').insertOne({
           'sender': userJose.id,
           'receiver': userRoro.id,
@@ -95,7 +95,7 @@ describe('Publications sur le profil', function() {
       });
     });
 
-    it('roro poste un message sur le mur de jose', function(done){
+    it('roro poste un message sur le mur de jose', function(done) {
       chai.request(libs.host.url)
         .post(`/api/myUsers/${userJose.id}/walls`)
         .set('Authorization', userRoro.token)
@@ -104,9 +104,9 @@ describe('Publications sur le profil', function() {
           expect(res).to.have.status(200);
           done();
         });
-    })
+    });
 
-    it('l admin poste un message sur le mur de jose', function(done){
+    it('l admin poste un message sur le mur de jose', function(done) {
       chai.request(libs.host.url)
         .post(`/api/myUsers/${userJose.id}/walls`)
         .set('Authorization', userAdmin.token)
@@ -115,7 +115,6 @@ describe('Publications sur le profil', function() {
           expect(res).to.have.status(200);
           done();
         });
-    })
-
+    });
   });
 });//
