@@ -133,5 +133,15 @@ describe('Publications sur le profil', function() {
           done();
         });
     });
+    it('admin peut publie sur le mur de sam', function(done) {
+      chai.request(libs.host.url)
+        .post(`/api/myUsers/${userSam.id}/walls`)
+        .set('Authorization', userAdmin.token)
+        .send({message: 'message de l admin sur le mur de sam', dateCreated: new Date(), friendId: userAdmin.id})
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
   })
 });//
