@@ -1,3 +1,21 @@
+# Publications sur le profil
+Nous traitons ici des messages publiés dans l’espace particulier du membre
+
+| Taches | Visiteur | Membres | Admins |
+| ----- | -------- | ------- | ------ |
+| publier un message sur son profil | X | V |V|
+| publier un message sur le profil d’un ami | X | V |V|
+| publier un message sur le profil de n'importe quel membre | X | X |V|
+| répondre à un message publié sur son profil | X | V |V|
+| répondre à un message publié sur le profil d’un ami | X | V |V|
+| répondre à un message publié sur le profil de n'importe quel membre | X | X |V|
+| supprimer un message que j’ai publié sur le profil d’un ami | X | V |V|
+| supprimer un message sur le profil de n'importe quel membre | X | X |V|
+
+## Gestion de l’affichage
+La publication sur le profil, la réponse à un message et la suppression se
+feront sans rafraîchissement de la page (méthode asynchrone).
+
 # Liste d’amis
 Cette liste n’affiche que les membres avec le statut « Confirmé ».
 

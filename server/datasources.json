@@ -19,15 +19,15 @@
     "transports": [
       {
         "type": "SMTP",
-        "host": "127.0.0.1",
+        "host": "smtp.mailtrap.io",
         "secure": false,
-        "port": 1025,
+        "port": 2525,
         "tls": {
           "rejectUnauthorized": false
         },
         "auth": {
-          "user": "yolo@mail.fr",
-          "pass": "yolo"
+          "user": "f12d1b7352d358",
+          "pass": "56cc0d8bca3b8b"
         }
       }
     ]

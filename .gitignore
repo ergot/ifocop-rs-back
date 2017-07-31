@@ -10,5 +10,4 @@ node_modules
 yarn.lock
 
 #appli
-server/parameters.js
 server/datasources.local.json

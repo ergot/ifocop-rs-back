@@ -3,6 +3,6 @@
  */
 module.exports = {
   mailtrap: {
-    'Api-Token': 'le token de l api',
+    'Api-Token': '88504e81e3ded9981a03c04231f501b4',
   },
 };
