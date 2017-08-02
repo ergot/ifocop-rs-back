@@ -11,3 +11,4 @@ yarn.lock
 
 #appli
 server/datasources.local.json
+package-lock.json
