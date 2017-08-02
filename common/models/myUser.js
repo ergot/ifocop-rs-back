@@ -13,11 +13,12 @@ module.exports = function(User) {
       type: 'email',
       to: userInstance.email,
       from: 'noreply@loopback.com',
-      subject: 'Thanks for registering.',
+      subject: 'Inscription à Ifocop RS',
       // template de l email: avec un href /myUsers/confirm?iud=XXXX qui permet de valider le compte
       template: path.resolve(__dirname, '../../server/views/verify.ejs'),
       redirect: '/verified',
       user: User,
+      text: '{href}'
     };
 
     // envoie de l email
