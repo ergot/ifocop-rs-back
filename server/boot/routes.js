@@ -5,7 +5,11 @@ module.exports = function (app) {
   const router = app.loopback.Router();
   const User = app.models.myUser;
 
-  router.get('/', function (req, res) {
+  // router.get('/', function (req, res) {
+  //   res.sendHtml;
+  // });
+
+  router.get('/login', function (req, res) {
     res.render('login');
   });
 
