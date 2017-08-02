@@ -48,7 +48,7 @@ module.exports = function(User) {
 
     User.app.models.Email.send({
       to: info.email,
-      from: info.email,
+      from: 'no@reponse.com',
       subject: 'Password reset',
       html: html,
     }, function(err) {
