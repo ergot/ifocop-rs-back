@@ -1,0 +1,29 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mongoDs": {
+    "url": "mongodb://heroku_x991tj3v:dqfjb2obgrm78640h5f4801uat@ds141450.mlab.com:41450/heroku_x991tj3v",
+    "connector": "mongodb"
+  },
+  "myEmailDataSource": {
+    "name": "myEmailDataSource",
+    "connector": "mail",
+    "transports": [
+      {
+        "type": "SMTP",
+        "host": "smtp.mailtrap.io",
+        "secure": false,
+        "port": 2525,
+        "tls": {
+          "rejectUnauthorized": false
+        },
+        "auth": {
+          "user": "f12d1b7352d358",
+          "pass": "56cc0d8bca3b8b"
+        }
+      }
+    ]
+  }
+}
