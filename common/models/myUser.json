@@ -40,39 +40,26 @@
     }
   },
   "acls": [
-    {
+   {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "admin",
       "permission": "ALLOW",
-      "property": "find"
+      "property": "__create__walls"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "member",
       "permission": "ALLOW",
-      "property": "find"
-    },{
-      "accessType": "READ",
+      "property": "__create__walls"
+    },
+    {
+      "property": "*",
+      "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "findById"
-    }
-   ,{
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "admin",
-      "permission": "ALLOW",
-      "property": "__create__walls"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "member",
-      "permission": "ALLOW",
-      "property": "__create__walls"
+      "permission": "ALLOW"
     }
   ],
   "methods": {}
