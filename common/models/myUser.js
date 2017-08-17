@@ -19,8 +19,12 @@ module.exports = function(User) {
       redirect: '/verified',
       user: User,
       text: '{href}',
-      host: 'yolo.com'
     };
+
+    if (process.env.NODE_ENV === 'production') {
+      options.host = 'tranquil-inlet-21479.herokuapp.com';
+      options.port = 80;
+    }
 
     // envoie de l email
     userInstance.verify(options, function(err, response, next) {
