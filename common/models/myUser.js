@@ -48,6 +48,13 @@ module.exports = function(User) {
   // 3 send password reset link when requested
   User.on('resetPasswordRequest', function(info) {
     var url = 'http://' + config.host + ':' + config.port + '/reset-password';
+
+    if (process.env.NODE_ENV === 'production') {
+
+      url = 'http://tranquil-inlet-21479.herokuapp.com/reset-password';
+    }
+
+
     var html = 'Click <a href="' + url + '?access_token=' +
       info.accessToken.id + '">here</a> to reset your password';
 
