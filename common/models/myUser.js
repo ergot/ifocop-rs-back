@@ -18,7 +18,8 @@ module.exports = function(User) {
       template: path.resolve(__dirname, '../../server/views/verify.ejs'),
       redirect: '/verified',
       user: User,
-      text: '{href}'
+      text: '{href}',
+      host: 'yolo.com'
     };
 
     // envoie de l email
