@@ -22,6 +22,12 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [{
+    "property": "*",
+    "accessType": "*",
+    "principalType": "ROLE",
+    "principalId": "$authenticated",
+    "permission": "ALLOW"
+  }],
   "methods": {}
 }
