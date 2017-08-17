@@ -10,4 +10,5 @@ module.exports = {
   mongo: {
     url: 'mongodb://heroku_x991tj3v:dqfjb2obgrm78640h5f4801uat@ds141450.mlab.com:41450/heroku_x991tj3v',
   },
+  host: 'tranquil-inlet-21479.herokuapp.com'
 };
