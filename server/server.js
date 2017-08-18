@@ -11,18 +11,17 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(loopback.token());
 
-app.use(function (req, res, next) {
-  let sslUrl;
-
-  if (process.env.NODE_ENV === 'production' &&
-    req.headers['x-forwarded-proto'] !== 'https') {
-
-    sslUrl = ['https://tranquil-inlet-21479.herokuapp.com', req.url].join('');
-    return res.redirect(sslUrl);
-  }
-
-  return next();
-});
+// app.use(function (req, res, next) {
+//   let sslUrl;
+//
+//   if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] !== 'https') {
+//
+//     sslUrl = ['https://tranquil-inlet-21479.herokuapp.com', req.url].join('');
+//     return res.redirect(sslUrl);
+//   }
+//
+//   return next();
+// });
 
 app.start = function() {
   // start the web server
