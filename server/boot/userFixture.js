@@ -7,6 +7,7 @@ module.exports = [{
   verificationToken: null,
   emailVerified: true,
   pictureProfile: 'https://randomuser.me/api/portraits/men/78.jpg',
+  pictureProfileHeader: 'https://www.planwallpaper.com/static/images/blackmoon-wallpaper-background.jpg'
 }, {
   email: 'jose@yopmail.com',
   password: 'password',
@@ -15,6 +16,7 @@ module.exports = [{
   verificationToken: null,
   emailVerified: true,
   pictureProfile: 'https://randomuser.me/api/portraits/men/77.jpg',
+  pictureProfileHeader: 'https://www.planwallpaper.com/static/images/2511289_GFurDeb.jpg'
 }, {
   email: 'unverified@yopmail.com',
   password: 'password',
@@ -30,6 +32,7 @@ module.exports = [{
   verificationToken: null,
   emailVerified: true,
   pictureProfile: 'https://randomuser.me/api/portraits/men/79.jpg',
+  pictureProfileHeader: 'https://www.planwallpaper.com/static/images/background-wallpapers-33.jpg'
 }, {
   email: 'roro@yopmail.com',
   password: 'password',
@@ -38,6 +41,7 @@ module.exports = [{
   verificationToken: null,
   emailVerified: true,
   pictureProfile: 'https://randomuser.me/api/portraits/men/80.jpg',
+  pictureProfileHeader: 'https://www.planwallpaper.com/static/images/FreeGreatPicture.com-18429-hd-color-background-wallpaper.jpg'
 }, {
   email: 'sam@yopmail.com',
   password: 'password',
@@ -46,4 +50,5 @@ module.exports = [{
   verificationToken: null,
   emailVerified: true,
   pictureProfile: 'https://randomuser.me/api/portraits/women/28.jpg',
+  pictureProfileHeader: 'https://www.planwallpaper.com/static/images/1968081.jpg'
 }];
