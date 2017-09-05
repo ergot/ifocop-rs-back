@@ -6,6 +6,7 @@ module.exports = [{
   lastName: 'admin',
   verificationToken: null,
   emailVerified: true,
+  pictureProfile: 'https://randomuser.me/api/portraits/men/78.jpg',
 }, {
   email: 'jose@yopmail.com',
   password: 'password',
@@ -13,6 +14,7 @@ module.exports = [{
   lastName: 'lucas',
   verificationToken: null,
   emailVerified: true,
+  pictureProfile: 'https://randomuser.me/api/portraits/men/77.jpg',
 }, {
   email: 'unverified@yopmail.com',
   password: 'password',
@@ -27,6 +29,7 @@ module.exports = [{
   lastName: 'robin',
   verificationToken: null,
   emailVerified: true,
+  pictureProfile: 'https://randomuser.me/api/portraits/men/79.jpg',
 }, {
   email: 'roro@yopmail.com',
   password: 'password',
@@ -34,6 +37,7 @@ module.exports = [{
   lastName: 'leclercq',
   verificationToken: null,
   emailVerified: true,
+  pictureProfile: 'https://randomuser.me/api/portraits/men/80.jpg',
 }, {
   email: 'sam@yopmail.com',
   password: 'password',
@@ -41,4 +45,5 @@ module.exports = [{
   lastName: 'caron',
   verificationToken: null,
   emailVerified: true,
+  pictureProfile: 'https://randomuser.me/api/portraits/women/28.jpg',
 }];

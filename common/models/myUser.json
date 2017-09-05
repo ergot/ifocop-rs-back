@@ -27,6 +27,12 @@
     "introduction": {
       "type": "string"
     },
+    "pictureProfile": {
+      "type": "string"
+    },
+    "pictureProfileHeader": {
+      "type": "string"
+    },
     "preference": {
       "type": "any"
     }
@@ -40,7 +46,7 @@
     }
   },
   "acls": [
-   {
+    {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "admin",
