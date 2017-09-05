@@ -30,6 +30,9 @@
     "pictureProfile": {
       "type": "string"
     },
+    "pseudo": {
+      "type": "string"
+    },
     "pictureProfileHeader": {
       "type": "string"
     },

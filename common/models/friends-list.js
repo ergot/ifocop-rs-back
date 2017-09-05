@@ -35,7 +35,7 @@ module.exports = function(Friendslist) {
                 from: $this.app.get('email').from,
                 to: user.email,
                 subject: subject,
-                html: 'All in the subject baka !',
+                html: 'You have a friend request',
               }, function(err) {
                 if (err) return next(err);
                 // @todo: Un mail est envoyé au membre choisi pour lui signaler l’invitation
