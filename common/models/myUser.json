@@ -6,11 +6,13 @@
     "validateUpsert": true
   },
   "properties": {
-    "name": {
-      "type": "string"
+    "lastName": {
+      "type": "string",
+      "default": "NoName"
     },
     "firstName": {
-      "type": "string"
+      "type": "string",
+      "default": "Anonymous"
     },
     "coordinates": {
       "type": "string"
