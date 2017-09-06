@@ -26,14 +26,14 @@
   },
   "RoleMapping": {
     "dataSource": "db",
-    "public": true,
+    "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
     "dataSource": "db",
-    "public": true
+    "public": false
   },
   "myUser": {
     "dataSource": "mongoDs",
