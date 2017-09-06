@@ -8,6 +8,16 @@ module.exports = function(User) {
   User.afterRemote('create', function(context, userInstance, next) {
     console.log('> user.afterRemote triggered');
 
+    // set member defaut role:
+    const RoleMapping = User.app.models.RoleMapping;
+
+    // role member par defaut
+    RoleMapping.create({
+      principalType: 'USER',
+      principalId: userInstance.id,
+      roleId: 2,
+    });
+
     // configuration de l email envoyer à l enregistrement
     var options = {
       type: 'email',
@@ -85,9 +95,8 @@ module.exports = function(User) {
       if (roleMappings.length > 1) throw 'User avec plusieurs roles non gérer';
 
       // 2  = member roleMappings[0].roleId
-      const roleId = roleMappings[0] === undefined ? 2 : roleMappings[0].roleId;
 
-      Role.find({where: {id: roleId}}, function(err, roles) {
+      Role.find({where: {id: roleMappings[0].roleId}}, function(err, roles) {
         asyncDone(null, roles[0]);
       }
       );
