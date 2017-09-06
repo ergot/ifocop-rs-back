@@ -50,10 +50,8 @@ module.exports = function(User) {
     var url = 'http://' + config.host + ':' + config.port + '/reset-password';
 
     if (process.env.NODE_ENV === 'production') {
-
       url = 'http://tranquil-inlet-21479.herokuapp.com/reset-password';
     }
-
 
     var html = 'Click <a href="' + url + '?access_token=' +
       info.accessToken.id + '">here</a> to reset your password';
@@ -85,7 +83,11 @@ module.exports = function(User) {
     RoleMapping.find({where: {principalId: accessToken}}, function(err, roleMappings) {
       if (err) throw err;
       if (roleMappings.length > 1) throw 'User avec plusieurs roles non gérer';
-      Role.find({where: {id: roleMappings[0].roleId}}, function(err, roles) {
+
+      // 2  = member roleMappings[0].roleId
+      const roleId = roleMappings[0] === undefined ? 2 : roleMappings[0].roleId;
+
+      Role.find({where: {id: roleId}}, function(err, roles) {
         asyncDone(null, roles[0]);
       }
       );
